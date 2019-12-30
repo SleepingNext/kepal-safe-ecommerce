@@ -17,27 +17,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
   $cekUsername = $db->from('tbl_user')->where('username',$data['username'])->select('username')->many(); 
   $cekEmail = $db->from('tbl_user')->where('email',$data['email'])->select('username')->many(); 
   $data['tipe_user'] = 'Pelanggan'; 
-  $pelanggan = array(
-    "nm_pelanggan"  => $_POST['nm_pelanggan'], 
-    "alamat"    => $_POST['alamat'], 
-    "jk"    => $_POST['jk'],
-    "no_telpon"    => $_POST['no_telpon']
-  );
-  
+
   if(count($cekUsername) != 0) $pesan = "username";
   else if(count($cekEmail) != 0) $pesan = "email";
   else { 
     if($db->from('tbl_user')->insert($data)->execute()){
-      $pelanggan = array(
-        "nm_pelanggan"  => $_POST['nm_pelanggan'], 
-        "alamat"    => $_POST['alamat'], 
-        "jk"    => $_POST['jk'],
-        "no_telpon"    => $_POST['no_telpon'],
-        "id_user" => $db->insert_id
-      );
-      if($db->from('tbl_pelanggan')->insert($pelanggan)->execute()){
         $pesan = "success";
-      }else $pesan="db";
     }else $pesan="db";
   }
   if($pesan != ''){
