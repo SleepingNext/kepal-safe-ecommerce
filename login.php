@@ -1,10 +1,10 @@
 <?php
 session_start();
+$title = 'Login';
 require "koneksi.php";
 require_once 'googleauthenticator/PHPGangsta/GoogleAuthenticator.php';
 include "template/components.php";
 include "template/head.php";
-$title = 'Login';
 
 if (isset($_SESSION['username'])) {
     header('Location: /skripsi');
@@ -38,16 +38,20 @@ $loginForm = array(
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = $_POST;
     $result = $db->from('tbl_user')->where(array('username' => $data['username'], 'password' => md5($data['password'])))->select()->one();
-    if (empty($result) && $googleAuthenticator->verifyCode($result['mfa_secret'], $data['mfa_code'], 3)) {
-        $errorMessage = alert('Username atau password salah', 'danger');
+    if (empty($result)) {
+        $errorMessage = alert('You entered the wrong credentials.', 'danger');
     } else {
-        $_SESSION['username'] = $result['username'];
-        $_SESSION['tipe_user'] = $result['tipe_user'];
-        $_SESSION['id_user'] = $result['id_user'];
-        header('Location: /skripsi');
+        $checkMFA = $googleAuthenticator->verifyCode($result['mfa_secret'], $data['mfa_code'], 3);
+        if ($checkMFA != 1) {
+            $errorMessage = alert('You entered the wrong MFA code.', 'danger');
+        } else {
+            $_SESSION['username'] = $result['username'];
+            $_SESSION['tipe_user'] = $result['tipe_user'];
+            $_SESSION['id_user'] = $result['id_user'];
+            header('Location: /skripsi');
+        }
     }
 }
-
 ?>
 
 <body>

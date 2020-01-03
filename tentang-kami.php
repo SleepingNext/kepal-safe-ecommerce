@@ -21,7 +21,7 @@ include "template/head.php";
                     <li>Trying to provide the best and fast service.</li>
                     <li>Trying to provide products suit the customers' needs.</li>
                     <li>Customers can purchase products online.</li>
-                    <li>Maintaining quality by providing products that fulfill customer satisfaction..</li>
+                    <li>Maintaining quality by providing products that fulfill customer satisfaction.</li>
                 </ol>
                 </div>
             </div>

@@ -1,9 +1,9 @@
 <?php
 session_start();
+$title = 'Registration';
 require "koneksi.php";
 require_once 'googleauthenticator/PHPGangsta/GoogleAuthenticator.php';
 
-$title = 'Registration';
 if (isset($_SESSION['username'])) {
     header('Location: /skripsi');
 }
@@ -47,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $data['password'] = md5($data['password']);
     $data['tipe_user'] = 'Pelanggan';
     $data['mfa_secret'] = $mfaSecret;
-    $qrCode = $googleAuthenticator->getQRCodeGoogleUrl($data['username'], $data['mfa_secret']);
 
     if (count($usernameAvailabilityCheck) != 0) $errorMessage = "username";
     else if (count($emailAvailabilityCheck) != 0) $errorMessage = "email";
@@ -69,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 break;
             case 'success' :
                 $registrationMessage = alert('Registrasi berhasil. Silahkan login.', 'success');
+                $qrCode = $googleAuthenticator->getQRCodeGoogleUrl($data['username'], $data['mfa_secret']);
                 break;
         }
     }
@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                             <div class="text-center">
                                 <?php
                                 if ($qrCode != "") {
-                                    echo "<img src='$qrCode' alt='QR Code'>";
+                                    echo "<img src='$qrCode' alt='QR Code'><br><br>";
                                 }
                                 ?>
                                 <button type="submit" class="btn btn-template-outlined"><i class="fa fa-user-md"></i>Register</button>

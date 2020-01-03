@@ -5,7 +5,7 @@
 # Step to Install
 1. Clone the project into your htdocs folder (or /var/www/). Remember that the folder name must be "skripsi"
 2. Run composer install && composer update in your terminal/command prompt.
-3. Make a database namely "dbsouvenir" without any apostrophe and import the _dbsouvenir.sql into the database.
+3. Make a database namely "dbsouvenir" without any apostrophe and import the dbsouvenir.sql into the database.
 4. Run the project.
 
 # Database

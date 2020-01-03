@@ -163,7 +163,7 @@ if (isset($_GET['laporan'])) {
                         $total = 0;
                         if (count($dataTable) == 0){
                             echo "<tr><td colspan=" . (count($tableConf) + 2) . ">Data Kosong</td></tr>";
-                        }else{
+                        } else {
                         foreach ($dataTable as $r) {
                             echo "
 			<tr>
