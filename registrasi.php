@@ -41,10 +41,11 @@ include "template/components.php";
 include "template/head.php";
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $salt = "eCommerceWebsite";
     $data = $_POST;
     $usernameAvailabilityCheck = $db->from('tbl_user')->where('username', $data['username'])->select('username')->many();
     $emailAvailabilityCheck = $db->from('tbl_user')->where('email', $data['email'])->select('username')->many();
-    $data['password'] = md5($data['password']);
+    $data['password'] = hash("sha256", $data['password'].$salt);
     $data['tipe_user'] = 'Pelanggan';
     $data['mfa_secret'] = $mfaSecret;
 

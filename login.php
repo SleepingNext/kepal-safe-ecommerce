@@ -36,8 +36,9 @@ $loginForm = array(
 );
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $salt = "eCommerceWebsite";
     $data = $_POST;
-    $result = $db->from('tbl_user')->where(array('username' => $data['username'], 'password' => md5($data['password'])))->select()->one();
+    $result = $db->from('tbl_user')->where(array('username' => $data['username'], 'password' => hash("sha256", $data['password'].$salt)))->select()->one();
     if (empty($result)) {
         $errorMessage = alert('You entered the wrong credentials.', 'danger');
     } else {
