@@ -2,7 +2,7 @@
 session_start();
 include "koneksi.php";
 cekLogin('Pelanggan');
-$judul = 'Pesan Produk';
+$title = 'Pesan Produk';
 if(!empty($_GET['id_produk']) && !empty($_GET['jenis'])) {
 
 $detail = $db->from('tbl_produk')->where('id_produk',$_GET['id_produk'])->select()->one();

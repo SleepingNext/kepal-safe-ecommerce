@@ -1,42 +1,35 @@
 <?php
 session_start();
-$judul = 'Cara Pemesanan';
+$title = "How To Purchase";
+
 include "template/head.php";
 ?>
+
 <body>
 <div id="all">
-<?php
-include "template/header.php";
-?>
-<div id="content">
-<div class="container">
-	
-	
-	
-
-<!-- START OF CONTENT -->
-<div class="box">
-	<div class="box-body">
-		<h2>Cara Pesan</h2>
-         CV.PERMATA OFFSET
-	Percetakan & Digital Printing
-	<ol>
-		<li>Lakukan registrasi setelah itu login dimenu sebelahnya</li>
-		<li>Pilih produk yang akan dipesan/klik produk yang ingin dipesan</li>
-		<li>Isi data produk dengan benar saat melakukan proses pemesanan</li>
-		<li>Cek data dengan teliti sebelum benar-benar melakukan pemesanan</li>
-		<li>Lakukan pembayaran dan kirimkan bukti transaksi pembayaran</li>
-		<li>Produk yang dipesan akan segera diproses</li>
-	</ol>
-	</div>
-</div>
-<!-- END OF CONTENT -->
-
-<!-- FOOTER -->
-</div>
-<?php include "template/footer.php"; ?>
-</div>
-<!-- Javascript files-->
-<?php include "template/javascript.php"; ?>
+    <?php
+    include "template/header.php";
+    ?>
+    <div id="content">
+        <div class="container">
+            <div class="box">
+                <div class="box-body">
+                    <h2>How To Purchase</h2>
+                    <ol>
+                        <li>Register a new account and login with the newly registered account.</li>
+                        <li>Choose the product wanted to be purchased.</li>
+                        <li>Fill the right information about the product when purchasing.</li>
+                        <li>Check the information before committing the purchase.</li>
+                        <li>Finish the payment and upload the proof of payment.</li>
+                        <li>The product will be processed as quickly as possible.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- FOOTER -->
+        <?php include "template/footer.php"; ?>
+    </div>
+    <!-- Javascript files-->
+    <?php include "template/javascript.php"; ?>
 </body>
 </html>

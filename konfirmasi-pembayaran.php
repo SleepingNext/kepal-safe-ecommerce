@@ -2,7 +2,7 @@
 session_start();
 require "koneksi.php";
 cekLogin('Pelanggan');
-$judul = 'Konfirmasi Pembayaran';
+$title = 'Konfirmasi Pembayaran';
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	parse_str($_SERVER['QUERY_STRING'], $qt);
 	$data = $_POST;

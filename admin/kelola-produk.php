@@ -1,7 +1,7 @@
 <?php
 session_start();
 require "../koneksi.php";
-$judul = 'Kelola Produk';
+$title = 'Kelola Produk';
 cekLogin('Admin');
 include "../template/components.php";
 include "../template/head.php";

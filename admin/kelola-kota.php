@@ -1,7 +1,7 @@
 <?php
 session_start();
 require "../koneksi.php";
-$judul = 'Kelola kota';
+$title = 'Kelola kota';
 cekLogin('Admin');
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$db->from('tbl_kota')->insert($_POST)->execute();

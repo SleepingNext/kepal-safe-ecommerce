@@ -4,102 +4,102 @@ require "../koneksi.php";
 cekLogin('Admin');
 require_once __DIR__ . '/../vendor/autoload.php';
 $mpdf = new \Mpdf\Mpdf(['tempDir' => __DIR__ . '/../tsmp']);
-$judul = null;
+$title = null;
 $head = "<h2>CV. PERMATA OFFSET</h2>";
 $alamat = "Jl. Raya Indarung No.04, Kel.Tanjung Sabar Padang";
 $awal = date('Y-m-d');
 $akhir = date('Y-m-d');
-if(isset($_GET['awal'])) $awal = $_GET['awal'];
-if(isset($_GET['akhir'])) $akhir = $_GET['akhir'];
+if (isset($_GET['awal'])) $awal = $_GET['awal'];
+if (isset($_GET['akhir'])) $akhir = $_GET['akhir'];
 
-if(isset($_GET['laporan'])){
-    switch($_GET['laporan']){
-        case "harian" : 
+if (isset($_GET['laporan'])) {
+    switch ($_GET['laporan']) {
+        case "harian" :
             $tableConf = array(
                 array(
-                    "name"		=>	"nama_pemesan",
-                    "caption"	=>	"Nama Pemesan"
+                    "name" => "nama_pemesan",
+                    "caption" => "Nama Pemesan"
                 ),
                 array(
-                    "name"		=>	"tgl_pesan",
-                    "caption"	=>	"Tanggal Pesan"
+                    "name" => "tgl_pesan",
+                    "caption" => "Tanggal Pesan"
                 ),
                 array(
-                    "name"		=>	"nm_produk",
-                    "caption"	=>	"Nama Produk"
+                    "name" => "nm_produk",
+                    "caption" => "Nama Produk"
                 ),
                 array(
-                    "name"		=>	"jumlah_pesan",
-                    "caption"	=>	"Jumlah Pesan"
+                    "name" => "jumlah_pesan",
+                    "caption" => "Jumlah Pesan"
                 ),
                 array(
-                    "name"		=>	"total_harga",
-                    "caption"	=>	"Total Pemasukan"
+                    "name" => "total_harga",
+                    "caption" => "Total Pemasukan"
                 )
             );
-            $judul = "Laporan Penjualan Hari ".date("l, d F Y");
+            $title = "Laporan Penjualan Hari " . date("l, d F Y");
             $dataTable = $db->sql('select * from tbl_pemesanan join tbl_produk on tbl_pemesanan.id_produk = tbl_produk.id_produk where day(tgl_pesan) = day(now())')->many();
-        break;
-        case "bulanan" : 
+            break;
+        case "bulanan" :
             $tableConf = array(
                 array(
-                    "name"		=>	"hari",
-                    "caption"	=>	"Tanggal"
+                    "name" => "hari",
+                    "caption" => "Tanggal"
                 ),
                 array(
-                    "name"		=>	"total_harga",
-                    "caption"	=>	"Total Pemasukan"
+                    "name" => "total_harga",
+                    "caption" => "Total Pemasukan"
                 )
             );
-            $judul = "Laporan Penjualan Bulan ".date("F Y");
+            $title = "Laporan Penjualan Bulan " . date("F Y");
             $dataTable = $db->sql('select day(tgl_pesan) as `hari`, sum(total_harga) as `total_harga` from tbl_pemesanan join tbl_produk on tbl_pemesanan.id_produk = tbl_produk.id_produk where month(tgl_pesan) = month(now()) and year(tgl_pesan) = year(now()) group by day(tgl_pesan)')->many();
-        break;
-        case "tahunan" : 
+            break;
+        case "tahunan" :
             $tableConf = array(
                 array(
-                    "name"		=>	"bulan",
-                    "caption"	=>	"Bulan"
+                    "name" => "bulan",
+                    "caption" => "Bulan"
                 ),
                 array(
-                    "name"		=>	"total_harga",
-                    "caption"	=>	"Total Pemasukan"
+                    "name" => "total_harga",
+                    "caption" => "Total Pemasukan"
                 )
             );
-            $judul = "Laporan Penjualan Tahun ".date("Y");
+            $title = "Laporan Penjualan Tahun " . date("Y");
             $dataTable = $db->sql('select month(tgl_pesan) as `bulan`, sum(total_harga) as `total_harga` from tbl_pemesanan join tbl_produk on tbl_pemesanan.id_produk = tbl_produk.id_produk where year(tgl_pesan) = year(now()) group by month(tgl_pesan)')->many();
-        break;
+            break;
     }
-}else{
+} else {
     $tableConf = array(
         array(
-            "name"		=>	"nama_pemesan",
-            "caption"	=>	"Nama Pemesan"
+            "name" => "nama_pemesan",
+            "caption" => "Nama Pemesan"
         ),
         array(
-            "name"		=>	"tgl_pesan",
-            "caption"	=>	"Tanggal Pesan"
+            "name" => "tgl_pesan",
+            "caption" => "Tanggal Pesan"
         ),
         array(
-            "name"		=>	"nm_produk",
-            "caption"	=>	"Nama Produk"
+            "name" => "nm_produk",
+            "caption" => "Nama Produk"
         ),
         array(
-            "name"		=>	"jumlah_pesan",
-            "caption"	=>	"Jumlah Pesan"
+            "name" => "jumlah_pesan",
+            "caption" => "Jumlah Pesan"
         ),
         array(
-            "name"		=>	"total_harga",
-            "caption"	=>	"Total Pemasukan"
+            "name" => "total_harga",
+            "caption" => "Total Pemasukan"
         )
     );
-    if(!isset($_GET['awal'])){
-    $judul = "Laporan Penjualan Keseluruhan";
-	$dataTable = $db->from('tbl_pemesanan')
-	->join('tbl_produk',array('tbl_pemesanan.id_produk' => 'tbl_produk.id_produk'))
-	->many();
-    }else{
-        $judul = "Laporan Dari Tanggal $awal - $akhir";
-        $dataTable = $db->sql('select * from tbl_pemesanan join tbl_produk on tbl_pemesanan.id_produk = tbl_produk.id_produk where tgl_pesan between "'.$awal.'" and "'.$akhir.'"')->many();
+    if (!isset($_GET['awal'])) {
+        $title = "Laporan Penjualan Keseluruhan";
+        $dataTable = $db->from('tbl_pemesanan')
+            ->join('tbl_produk', array('tbl_pemesanan.id_produk' => 'tbl_produk.id_produk'))
+            ->many();
+    } else {
+        $title = "Laporan Dari Tanggal $awal - $akhir";
+        $dataTable = $db->sql('select * from tbl_pemesanan join tbl_produk on tbl_pemesanan.id_produk = tbl_produk.id_produk where tgl_pesan between "' . $awal . '" and "' . $akhir . '"')->many();
     }
 }
 $html = '';
@@ -131,17 +131,17 @@ h1, h2, p{
     text-align: center;
 }
 </style>';
-$html .='<h2>'.$head.'</h2>';
-$html .='<p>'.$alamat.'</p>';
-$html .='<p>'.$judul.'</p>';
-$html .='<hr>';
+$html .= '<h2>' . $head . '</h2>';
+$html .= '<p>' . $alamat . '</p>';
+$html .= '<p>' . $title . '</p>';
+$html .= '<hr>';
 $html .= '<table class="table table-hover">
 <thead>
 	<tr>
 		<th>No</th>';
-		
-foreach($tableConf as $t){
-	$html .= "<th>".$t['caption']."</th>";
+
+foreach ($tableConf as $t) {
+    $html .= "<th>" . $t['caption'] . "</th>";
 }
 $html .= '</tr>
 </thead>
@@ -149,33 +149,33 @@ $html .= '</tr>
 
 $no = 1;
 $total = 0;
-if(count($dataTable) == 0){
-	$html .= "<tr><td colspan=".(count($tableConf)+2).">Data Kosong</td></tr>";
-}else{
-	foreach($dataTable as $r){
-		$html .= "
+if (count($dataTable) == 0) {
+    $html .= "<tr><td colspan=" . (count($tableConf) + 2) . ">Data Kosong</td></tr>";
+} else {
+    foreach ($dataTable as $r) {
+        $html .= "
 			<tr>
-				<td>".$no."</td>";
-		foreach($tableConf as $t){
-			if($t['name'] == 'total_harga'){
-				$html .= "<td>Rp ".number_format($r[$t['name']],2,',','.')."</td>";
-			}else $html .= "<td>".$r[$t['name']]."</td>";
-		}
-		$no++;
-		$total += $r['total_harga'];
-		$html .= "</tr>";
-	}
-	$html .= "
+				<td>" . $no . "</td>";
+        foreach ($tableConf as $t) {
+            if ($t['name'] == 'total_harga') {
+                $html .= "<td>Rp " . number_format($r[$t['name']], 2, ',', '.') . "</td>";
+            } else $html .= "<td>" . $r[$t['name']] . "</td>";
+        }
+        $no++;
+        $total += $r['total_harga'];
+        $html .= "</tr>";
+    }
+    $html .= "
 	<tfoot>
 	<tr>
-	<td colspan=".(count($tableConf)).">Total</td>
-	<td>Rp ".number_format($total,2,',','.')."</td>
+	<td colspan=" . (count($tableConf)) . ">Total</td>
+	<td>Rp " . number_format($total, 2, ',', '.') . "</td>
 	</tr></tfoot>";
 }
 $html .= '</tbody>	
 </table>';
 
-$html .= "<br/><br/><br/><div class='ttd'>Padang, ".date("d-m-Y")."<br/><br/><br/> Mengetahui</div>";
+$html .= "<br/><br/><br/><div class='ttd'>Padang, " . date("d-m-Y") . "<br/><br/><br/> Mengetahui</div>";
 
 //~ echo $html;
 $mpdf->WriteHTML($html);
