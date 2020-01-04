@@ -7,7 +7,7 @@ include "template/components.php";
 include "template/head.php";
 
 if (isset($_SESSION['username'])) {
-    header('Location: /skripsi');
+    header('Location: index.php');
 }
 
 $googleAuthenticator = new PHPGangsta_GoogleAuthenticator();
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['username'] = $result['username'];
             $_SESSION['tipe_user'] = $result['tipe_user'];
             $_SESSION['id_user'] = $result['id_user'];
-            header('Location: /skripsi');
+            header('Location: index.php');
         }
     }
 }

@@ -5,7 +5,7 @@ require "koneksi.php";
 require_once 'googleauthenticator/PHPGangsta/GoogleAuthenticator.php';
 
 if (isset($_SESSION['username'])) {
-    header('Location: /skripsi');
+    header('Location: index.php');
 }
 
 $googleAuthenticator = new PHPGangsta_GoogleAuthenticator();
