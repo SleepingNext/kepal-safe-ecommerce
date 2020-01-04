@@ -1,5 +1,5 @@
 <?php
-$base_url = "http://kepal-ecommerce.herokuapp.com";
+$base_url = "https://kepal-ecommerce.herokuapp.com";
 require_once __DIR__ . '/../vendor/autoload.php';
 //~ require "flash.php";
 //~ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
