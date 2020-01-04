@@ -1,12 +1,6 @@
 <?php
 $base_url = "http://localhost/skripsi";
 require_once __DIR__ . '/../vendor/autoload.php';
-
-if(!isset($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] != "on")
-{
-    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"], true, 301);
-    exit;
-}
 //~ require "flash.php";
 //~ $msg = new \Plasticbrain\FlashMessages\FlashMessages();
 ?>
