@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 03, 2020 at 07:44 AM
+-- Generation Time: Jan 04, 2020 at 08:27 AM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -210,8 +210,10 @@ CREATE TABLE `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`id_user`, `username`, `password`, `mfa_secret`, `email`, `tipe_user`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'VBLPBPUIMIY27TQ3', 'admin@admin.com', 'Admin'),
-(2, 'buyer', '794aad24cbd58461011ed9094b7fa212', 'JE3QRZ6DLIQ2D2MV', 'buyer@buyer.com', 'Pelanggan');
+(1, 'admin', 'f40ed264970e9745b46822ce1d660e43e034034e76d99645dcbc44c0fdac06d6', 'VBLPBPUIMIY27TQ3', 'admin@admin.com', 'Admin'),
+(2, 'buyer', 'd6699ffd91a67dab27c7985b050e108e8aa23f7d3cbeb3591b64038a606dce8f', 'JE3QRZ6DLIQ2D2MV', 'buyer@buyer.com', 'Pelanggan'),
+(3, 'example', 'b655ddf2716585c7db72a9acb51441176110c7e3992be10dd5d00c1eac1161f2', '5UBRXDLJZB4MN2KP', 'example@example.com', 'Pelanggan'),
+(4, 'test', '7e42214e83875dea97d94fe7cc9922950b9f5ee08df8602ce08c161714f32682', 'QQRFMYBHVTA26VF6', 'test@test.com', 'Pelanggan');
 
 --
 -- Indexes for dumped tables
@@ -297,7 +299,7 @@ ALTER TABLE `tbl_produk`
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
