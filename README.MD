@@ -13,7 +13,7 @@ Database settings included in koneksi.php, using <a href="https://github.com/mik
 
 # User
 1. username: admin, password: admin.
-2. you can create more by using the registrasi option.
+2. you can create more by using the register option.
 
 # Owner
 All right reserved to egodasa. Cloned from https://github.com/egodasa/ecommerce-souvenir-undangan-pernikahan/
