@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row d-flex align-items-center">
             <div class="col-md-6 d-md-block d-none">
-                <p>Selling Invitation Card and Souvenir</p>
+                <p>CV. Permata Offset Selling Invitation Card and Souvenir</p>
             </div>
             <div class="col-md-6">
                 <div class="d-flex justify-content-md-end justify-content-between">
