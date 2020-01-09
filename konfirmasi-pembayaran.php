@@ -8,10 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     parse_str($_SERVER['QUERY_STRING'], $qt);
     $data = $_POST;
     $data['nama_pembayar'] = encrypt($data['nama_pembayar']);
-    $data['no_rek'] = encrypt($data['no_rek']);
     $data['nama_bank'] = encrypt($data['nama_bank']);
-    $data['tgl_pembayaran'] = encrypt($data['tbl_pembayaran']);
-    $data['total'] = encrypt($data['total']);
     $data['foto_bukti'] = encrypt($_FILES['foto_bukti']['name']);
     $path = "konfirmasi/";
     $path = $path . basename($_FILES['foto_bukti']['name']);
@@ -47,7 +44,7 @@ include "template/head.php";
                             <h2>Konfirmasi Pembayaran</h2>
                         </div>
                         <label for="tgl_pembayaran"><b>Total Yang harus dibayar</b></label>
-                        <p class="form-control"><?php echo decrypt($detail['total_harga']); ?></p>
+                        <p class="form-control"><?php echo $detail['total_harga']; ?></p>
                         <br/>
                         <input type="hidden" value="<?php echo $_GET['id_pemesanan']; ?>" name="id_pemesanan"/>
                         <?php

@@ -1,5 +1,6 @@
 <?php
 $base_url = "https://kepal-ecommerce.herokuapp.com";
+//$base_url = "https://localhost/skripsi";
 require_once __DIR__ . '/../vendor/autoload.php';
 //~ require "flash.php";
 //~ $msg = new \Plasticbrain\FlashMessages\FlashMessages();

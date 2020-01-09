@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "../koneksi.php";
+require "../RSA.php";
 cekLogin('Admin');
 $title = 'Daftar Transaksi';
 include "../template/components.php";
@@ -90,7 +91,7 @@ include "../template/head.php";
                                             "type" => "input",
                                             "inputType" => "text",
                                             "col" => "12",
-                                            "value" => $detail['nama_pemesan'],
+                                            "value" => decrypt($detail['nama_pemesan']),
                                             "readonly" => true
                                         ),
                                         array(
@@ -108,7 +109,7 @@ include "../template/head.php";
                                             "type" => "textarea",
                                             "inputType" => "text",
                                             "col" => "12",
-                                            "value" => $detail['alamat_pemesan'],
+                                            "value" => decrypt($detail['alamat_pemesan']),
                                             "readonly" => true
                                         ),
                                         array(
@@ -125,7 +126,6 @@ include "../template/head.php";
                                             "label" => "Harga Produk",
                                             "type" => "input",
                                             "inputType" => "number",
-                                            "readonly" => true,
                                             "col" => "3",
                                             "value" => $detail['harga'],
                                             "readonly" => true
@@ -135,7 +135,6 @@ include "../template/head.php";
                                             "label" => "Jumlah Pesan",
                                             "type" => "input",
                                             "inputType" => "number",
-                                            "readonly" => true,
                                             "col" => "3",
                                             "value" => $detail['jumlah_pesan'],
                                             "readonly" => true
@@ -146,7 +145,6 @@ include "../template/head.php";
                                             "type" => "input",
                                             "inputType" => "number",
                                             "value" => $detail['total_harga'],
-                                            "readonly" => true,
                                             "col" => "12",
                                             "readonly" => true
                                         )
@@ -159,10 +157,10 @@ include "../template/head.php";
                                 ?>
                                 <h2>Detail Undangan</h2>
                                 <label for="nama_mempelai"><b>Nama Mempelai</b></label>
-                                <p class="form-control"><?php echo $dataUndangan['nama_mempelai']; ?></p>
+                                <p class="form-control"><?php echo decrypt($dataUndangan['nama_mempelai']); ?></p>
 
                                 <label for="nama_orangtua"><b>Nama Orang Tua</b></label>
-                                <p class="form-control"><?php echo $dataUndangan['nama_orangtua']; ?></p>
+                                <p class="form-control"><?php echo decrypt($dataUndangan['nama_orangtua']); ?></p>
 
                                 <label for="tgl_akadnikah"><b>Tanggal Akad Nikah</b></label>
                                 <p class="form-control"><?php echo $dataUndangan['tgl_akadnikah']; ?></p>
@@ -177,16 +175,16 @@ include "../template/head.php";
                                 <p class="form-control"><?php echo $dataUndangan['waktu_resepsi']; ?></p>
 
                                 <label for="alamat_akadnikah"><b>Alamat Akad Nikah</b></label>
-                                <p class="form-control"><?php echo $dataUndangan['alamat_akadnikah']; ?></p>
+                                <p class="form-control"><?php echo decrypt($dataUndangan['alamat_akadnikah']); ?></p>
 
                                 <label for="alamat_resepsi"><b>Alamat Resepsi</b></label>
-                                <p class="form-control"><?php echo $dataUndangan['alamat_resepsi']; ?></p>
+                                <p class="form-control"><?php echo decrypt($dataUndangan['alamat_resepsi']); ?></p>
 
                                 <label for="anggota_keluarga"><b>Anggota Keluarga Yang Mengundang</b></label>
-                                <p class="form-control"><?php echo $dataUndangan['anggota_keluarga']; ?></p>
+                                <p class="form-control"><?php echo decrypt($dataUndangan['anggota_keluarga']); ?></p>
 
                                 <label for="foto_lokasi"><b>Foto Denah Lokasi</b></label>
-                                <p class="form-control"><?php echo "<img src='" . $base_url . "/lokasi/" . $dataUndangan['foto_lokasi'] . "' width='300' height='300'/>" ?></p>
+                                <p class="form-control"><?php echo "<img src='" . $base_url . "/lokasi/" . decrypt($dataUndangan['foto_lokasi']) . "' width='300' height='300'/>" ?></p>
                                 <?php
                             }
                             echo '<a class="btn btn-success" href="daftar-transaksi.php">Kembali >></a>';
@@ -228,7 +226,13 @@ include "../template/head.php";
                                                 } else if ($r['status_pembayaran'] == 'Ditolak') {
                                                     echo "<td><span class='badge badge-danger'>" . $r['status_pembayaran'] . "</span></td>";
                                                 }
-                                            } else echo "<td>" . $r[$t['name']] . "</td>";
+                                            } else {
+                                                if ($t['name'] == "nama_pemesan") {
+                                                    echo "<td>" . decrypt($r[$t['name']]) . "</td>";
+                                                } else {
+                                                    echo "<td>" . $r[$t['name']] . "</td>";
+                                                }
+                                            }
                                             if ($t['name'] == 'status_pembayaran') {
                                                 if ($r['status_pembayaran'] == 'Diproses') {
                                                     echo "<td><a class='btn btn-info btn-sm' href='" . $base_url . "/admin/verifikasi-pembayaran.php?id_pemesanan=" . $r['id_pemesanan'] . "'>Verifikasi Pembayaran</span></td>";

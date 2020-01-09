@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "../koneksi.php";
+require "../RSA.php";
 $title = "Laporan Penjualan";
 cekLogin('Admin');
 include "../template/head.php";
@@ -171,7 +172,13 @@ if (isset($_GET['laporan'])) {
                             foreach ($tableConf as $t) {
                                 if ($t['name'] == 'total_harga') {
                                     echo "<td>Rp " . number_format($r[$t['name']], 2, ',', '.') . "</td>";
-                                } else echo "<td>" . $r[$t['name']] . "</td>";
+                                } else {
+                                    if ($t['name'] == "nama_pemesan") {
+                                        echo "<td>" . decrypt($r[$t['name']]) . "</td>";
+                                    } else {
+                                        echo "<td>" . $r[$t['name']] . "</td>";
+                                    }
+                                }
                             }
                             $no++;
                             $total += $r['total_harga'];

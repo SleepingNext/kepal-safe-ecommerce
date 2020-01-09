@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "../koneksi.php";
+require "../RSA.php";
 cekLogin('Admin');
 require_once __DIR__ . '/../vendor/autoload.php';
 $mpdf = new \Mpdf\Mpdf(['tempDir' => __DIR__ . '/../tsmp']);
@@ -159,7 +160,13 @@ if (count($dataTable) == 0) {
         foreach ($tableConf as $t) {
             if ($t['name'] == 'total_harga') {
                 $html .= "<td>Rp " . number_format($r[$t['name']], 2, ',', '.') . "</td>";
-            } else $html .= "<td>" . $r[$t['name']] . "</td>";
+            } else {
+                if ($t['name'] == "nama_pemesan") {
+                    $html .= "<td>" . decrypt($r[$t['name']]) . "</td>";
+                } else {
+                    $html .= "<td>" . $r[$t['name']] . "</td>";
+                }
+            }
         }
         $no++;
         $total += $r['total_harga'];

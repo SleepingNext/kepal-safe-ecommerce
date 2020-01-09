@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "../koneksi.php";
+require "../RSA.php";
 $title = 'Verifikasi Pembayaran';
 cekLogin('Admin');
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -30,7 +31,7 @@ include "../template/header.php";
 <input type="hidden" value="<?php echo $_GET['id_pemesanan']; ?>" name="id_pemesanan" />
 
 <label for="nama_pembayar"><b>Nama Pembayar</b></label>
-<p class="form-control"><?php echo $detail['nama_pembayar']; ?></p>
+<p class="form-control"><?php echo decrypt($detail['nama_pembayar']); ?></p>
 <div class="row">
 	<div class="col-sm-6">
 		<label for="no_rek"><b>Nomor Rekening</b></label>
@@ -38,7 +39,7 @@ include "../template/header.php";
 	</div>
 	<div class="col-sm-6">
 		<label for="nama_bank"><b>Nama bank</b></label>
-		<p class="form-control"><?php echo $detail['nama_bank']; ?></p>
+		<p class="form-control"><?php echo decrypt($detail['nama_bank']); ?></p>
 	</div>
 </div>
 <label for="tgl_pembayaran"><b>Tanggal Pembayaran</b></label>
@@ -55,7 +56,7 @@ include "../template/header.php";
 </div>
 
 <label for="foto_bukti"><b>Foto Bukti</b></label>
-<p class="form-control"><img src="/skripsi/konfirmasi/<?php echo $detail['foto_bukti'];?>" width="100%" /></p>
+<p class="form-control"><img src="/skripsi/konfirmasi/<?php echo decrypt($detail['foto_bukti']);?>" width="100%" /></p>
 
 <button type="submit" class="btn btn-lg btn-success" name="status_pembayaran"  value="Diterima">Terima Pembayaran</button>
 <button type="submit" class="btn btn-lg btn-danger" name="status_pembayaran"  value="Ditolak">Tolak Pembayaran</button>

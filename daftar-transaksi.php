@@ -70,7 +70,7 @@ include "template/head.php";
                                     <div class="col-md-4 col-xs-12">
                                         <div class="product">
                                             <div class="image">
-                                                <img src="<?php echo $base_url; ?>/produk/<?php echo decrypt($picture['foto_produk']); ?>"
+                                                <img src="<?php echo $base_url; ?>/produk/<?php echo $picture['foto_produk']; ?>"
                                                      alt="" class="img-fluid image1">
                                             </div>
                                         </div>
@@ -106,7 +106,7 @@ include "template/head.php";
                                             "type" => "input",
                                             "inputType" => "text",
                                             "col" => "12",
-                                            "value" => decrypt($detail['nm_kota']) . " (Biaya pengiriman " . decrypt($detail['tarif']) . ")",
+                                            "value" => $detail['nm_kota'] . " (Biaya pengiriman " . $detail['tarif'] . ")",
                                             "readonly" => true
                                         ),
                                         array(
@@ -124,7 +124,7 @@ include "template/head.php";
                                             "type" => "input",
                                             "inputType" => "text",
                                             "col" => "6",
-                                            "value" => decrypt($detail['no_telp']),
+                                            "value" => $detail['no_telp'],
                                             "readonly" => true
                                         ),
                                         array(
@@ -132,9 +132,8 @@ include "template/head.php";
                                             "label" => "Harga Produk",
                                             "type" => "input",
                                             "inputType" => "number",
-                                            "readonly" => true,
                                             "col" => "3",
-                                            "value" => decrypt($detail['harga']),
+                                            "value" => $detail['harga'],
                                             "readonly" => true
                                         ),
                                         array(
@@ -142,9 +141,8 @@ include "template/head.php";
                                             "label" => "Jumlah Pesan",
                                             "type" => "input",
                                             "inputType" => "number",
-                                            "readonly" => true,
                                             "col" => "3",
-                                            "value" => decrypt($detail['jumlah_pesan']),
+                                            "value" => $detail['jumlah_pesan'],
                                             "readonly" => true
                                         ),
                                         array(
@@ -152,8 +150,7 @@ include "template/head.php";
                                             "label" => "Total Harga",
                                             "type" => "input",
                                             "inputType" => "number",
-                                            "value" => decrypt($detail['total_harga']),
-                                            "readonly" => true,
+                                            "value" => $detail['total_harga'],
                                             "col" => "12",
                                             "readonly" => true
                                         )
@@ -172,16 +169,16 @@ include "template/head.php";
                                 <p class="form-control"><?php echo decrypt($dataUndangan['nama_orangtua']); ?></p>
 
                                 <label for="tgl_akadnikah"><b>Tanggal Akad Nikah</b></label>
-                                <p class="form-control"><?php echo decrypt($dataUndangan['tgl_akadnikah']); ?></p>
+                                <p class="form-control"><?php echo $dataUndangan['tgl_akadnikah']; ?></p>
 
                                 <label for="tgl_resepsi"><b>Tanggal Resepsi</b></label>
-                                <p class="form-control"><?php echo decrypt($dataUndangan['tgl_resepsi']); ?></p>
+                                <p class="form-control"><?php echo $dataUndangan['tgl_resepsi']; ?></p>
 
                                 <label for="waktu_akadnikah"><b>Jam Akad Nikah</b></label>
-                                <p class="form-control"><?php echo decrypt($dataUndangan['waktu_akadnikah']); ?></p>
+                                <p class="form-control"><?php echo $dataUndangan['waktu_akadnikah']; ?></p>
 
                                 <label for="waktu_resepsi"><b>Jam Resepsi</b></label>
-                                <p class="form-control"><?php echo decrypt($dataUndangan['waktu_resepsi']); ?></p>
+                                <p class="form-control"><?php echo $dataUndangan['waktu_resepsi']; ?></p>
 
                                 <label for="alamat_akadnikah"><b>Alamat Akad Nikah</b></label>
                                 <p class="form-control"><?php echo decrypt($dataUndangan['alamat_akadnikah']); ?></p>
@@ -233,7 +230,13 @@ include "template/head.php";
                                                 } else if ($r['status_pembayaran'] == 'Ditolak') {
                                                     echo "<td><span class='badge badge-danger'>" . $r['status_pembayaran'] . "</span></td>";
                                                 }
-                                            } else echo "<td>" . $r[$t['name']] . "</td>";
+                                            } else {
+                                                if ($t['name'] == "nama_pemesan") {
+                                                    echo "<td>" . decrypt($r[$t['name']]) . "</td>";
+                                                } else {
+                                                    echo "<td>" . $r[$t['name']] . "</td>";
+                                                }
+                                            }
                                             if ($t['name'] == 'status_pembayaran') {
                                                 if ($r['status_pembayaran'] == null) {
                                                     echo "<td><a class='btn btn-info btn-sm' href='konfirmasi-pembayaran.php?id_pemesanan=" . $r['id_pemesanan'] . "'>Konfirmasi Pembayaran</a></td>";
