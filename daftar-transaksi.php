@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "koneksi.php";
+require "RSA.php";
 $title = 'Transactions';
 
 cekLogin('Pelanggan');
@@ -69,7 +70,7 @@ include "template/head.php";
                                     <div class="col-md-4 col-xs-12">
                                         <div class="product">
                                             <div class="image">
-                                                <img src="<?php echo $base_url; ?>/produk/<?php echo $picture['foto_produk']; ?>"
+                                                <img src="<?php echo $base_url; ?>/produk/<?php echo decrypt($picture['foto_produk']); ?>"
                                                      alt="" class="img-fluid image1">
                                             </div>
                                         </div>
@@ -96,7 +97,7 @@ include "template/head.php";
                                             "type" => "input",
                                             "inputType" => "text",
                                             "col" => "12",
-                                            "value" => $detail['nama_pemesan'],
+                                            "value" => decrypt($detail['nama_pemesan']),
                                             "readonly" => true
                                         ),
                                         array(
@@ -105,7 +106,7 @@ include "template/head.php";
                                             "type" => "input",
                                             "inputType" => "text",
                                             "col" => "12",
-                                            "value" => $detail['nm_kota'] . " (Biaya pengiriman " . $detail['tarif'] . ")",
+                                            "value" => decrypt($detail['nm_kota']) . " (Biaya pengiriman " . decrypt($detail['tarif']) . ")",
                                             "readonly" => true
                                         ),
                                         array(
@@ -114,7 +115,7 @@ include "template/head.php";
                                             "type" => "textarea",
                                             "inputType" => "text",
                                             "col" => "12",
-                                            "value" => $detail['alamat_pemesan'],
+                                            "value" => decrypt($detail['alamat_pemesan']),
                                             "readonly" => true
                                         ),
                                         array(
@@ -123,7 +124,7 @@ include "template/head.php";
                                             "type" => "input",
                                             "inputType" => "text",
                                             "col" => "6",
-                                            "value" => $detail['no_telp'],
+                                            "value" => decrypt($detail['no_telp']),
                                             "readonly" => true
                                         ),
                                         array(
@@ -133,7 +134,7 @@ include "template/head.php";
                                             "inputType" => "number",
                                             "readonly" => true,
                                             "col" => "3",
-                                            "value" => $detail['harga'],
+                                            "value" => decrypt($detail['harga']),
                                             "readonly" => true
                                         ),
                                         array(
@@ -143,7 +144,7 @@ include "template/head.php";
                                             "inputType" => "number",
                                             "readonly" => true,
                                             "col" => "3",
-                                            "value" => $detail['jumlah_pesan'],
+                                            "value" => decrypt($detail['jumlah_pesan']),
                                             "readonly" => true
                                         ),
                                         array(
@@ -151,7 +152,7 @@ include "template/head.php";
                                             "label" => "Total Harga",
                                             "type" => "input",
                                             "inputType" => "number",
-                                            "value" => $detail['total_harga'],
+                                            "value" => decrypt($detail['total_harga']),
                                             "readonly" => true,
                                             "col" => "12",
                                             "readonly" => true
@@ -160,39 +161,39 @@ include "template/head.php";
                                 )
                             );
                             formGenerator($detailForm);
-                            if ($detail['jenis_produk'] == 'Undangan') {
+                            if (decrypt($detail['jenis_produk']) == 'Undangan') {
                                 $dataUndangan = $db->from('tbl_detail_pesanan')->where('id_pemesanan', $_GET['id_pemesanan'])->select()->one();
                                 ?>
                                 <h2>Detail of Invitation</h2>
                                 <label for="nama_mempelai"><b>Nama Mempelai</b></label>
-                                <p class="form-control"><?php echo $dataUndangan['nama_mempelai']; ?></p>
+                                <p class="form-control"><?php echo decrypt($dataUndangan['nama_mempelai']); ?></p>
 
                                 <label for="nama_orangtua"><b>Nama Orang Tua</b></label>
-                                <p class="form-control"><?php echo $dataUndangan['nama_orangtua']; ?></p>
+                                <p class="form-control"><?php echo decrypt($dataUndangan['nama_orangtua']); ?></p>
 
                                 <label for="tgl_akadnikah"><b>Tanggal Akad Nikah</b></label>
-                                <p class="form-control"><?php echo $dataUndangan['tgl_akadnikah']; ?></p>
+                                <p class="form-control"><?php echo decrypt($dataUndangan['tgl_akadnikah']); ?></p>
 
                                 <label for="tgl_resepsi"><b>Tanggal Resepsi</b></label>
-                                <p class="form-control"><?php echo $dataUndangan['tgl_resepsi']; ?></p>
+                                <p class="form-control"><?php echo decrypt($dataUndangan['tgl_resepsi']); ?></p>
 
                                 <label for="waktu_akadnikah"><b>Jam Akad Nikah</b></label>
-                                <p class="form-control"><?php echo $dataUndangan['waktu_akadnikah']; ?></p>
+                                <p class="form-control"><?php echo decrypt($dataUndangan['waktu_akadnikah']); ?></p>
 
                                 <label for="waktu_resepsi"><b>Jam Resepsi</b></label>
-                                <p class="form-control"><?php echo $dataUndangan['waktu_resepsi']; ?></p>
+                                <p class="form-control"><?php echo decrypt($dataUndangan['waktu_resepsi']); ?></p>
 
                                 <label for="alamat_akadnikah"><b>Alamat Akad Nikah</b></label>
-                                <p class="form-control"><?php echo $dataUndangan['alamat_akadnikah']; ?></p>
+                                <p class="form-control"><?php echo decrypt($dataUndangan['alamat_akadnikah']); ?></p>
 
                                 <label for="alamat_resepsi"><b>Alamat Resepsi</b></label>
-                                <p class="form-control"><?php echo $dataUndangan['alamat_resepsi']; ?></p>
+                                <p class="form-control"><?php echo decrypt($dataUndangan['alamat_resepsi']); ?></p>
 
                                 <label for="anggota_keluarga"><b>Anggota Keluarga Yang Mengundang</b></label>
-                                <p class="form-control"><?php echo $dataUndangan['anggota_keluarga']; ?></p>
+                                <p class="form-control"><?php echo decrypt($dataUndangan['anggota_keluarga']); ?></p>
 
                                 <label for="foto_lokasi"><b>Foto Denah Lokasi</b></label>
-                                <p class="form-control"><?php echo "<img src='" . $base_url . "/lokasi/" . $dataUndangan['foto_lokasi'] . "' width='300' height='300'/>" ?></p>
+                                <p class="form-control"><?php echo "<img src='" . $base_url . "/lokasi/" . decrypt($dataUndangan['foto_lokasi']) . "' width='300' height='300'/>" ?></p>
                                 <?php
                             }
                             echo '<a class="btn btn-primary" href="daftar-transaksi.php">Back</a>';
